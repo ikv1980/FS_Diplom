@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap&subset=cyrillic-ext');
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+body {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    font-weight: 400;
+    background: #fff;
+}
+
+img {max-width: 100%}
+
+a {
+    color: #ff5644;
+    text-decoration: none;
+    transition: all 0.6s ease;
+}
+
+a:hover {
+    color: #8bddff;
+    transition: all 0.6s ease;
+}
+
+.container {
+    padding-left: 10%;
+    padding-right: 10%;
+    width: 80%;
+}
+
+header > .top-menu {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1B3333;
+    color: #fff;
+    box-shadow: 0px 7px 7px -5px rgb(34 60 80 / 60%);
+}
+
+/* Логотип и слоган */
+header > .top-menu > .logo {
+    display: flex;
+    align-items: center;
+}
+
+header > .top-menu > .logo img
+ {
+    width: 100px;
+    margin-right: 20px;
+}
+
+header > .top-menu > .logo span {
+    font-size: 18px;
+    color: #FFCC00;
+}
+
+/* Первое меню (ссылки) */
+header > .top-menu > div > .firstmenu {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+header > .top-menu > div > .firstmenu a {
+    color: #fff;
+    margin-left: 10px
+}
+header > .top-menu > div > .firstmenu a:hover {
+    color: #FFCC00;
+}
+/*Добавление разделителя между пунктами меню*/
+header > .top-menu > div > .firstmenu a:not(:last-of-type)::after {
+    content: "|";
+    margin-left: 10px;
+    font-weight: 600;
+    color: #f89b95;
+}
+
+/* Второе меню (кнопки) */
+header > .top-menu > div > .secondmenu {
+    display: flex;
+    justify-content: flex-end;
+}
+.btn {
+    padding: 0px 15px;
+    height: 40px;
+    background: rgb(25, 128, 34);
+    border-radius: 5px;
+    border: 0;
+    font-size: 14px;
+    margin-left: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 600ms ease;
+}
+header .btn.auth {
+    min-width: 100px;
+    background: #ff5644;
+}
+header .btn.dashboard, .dashboard {
+    background: #ff5644;
+}
+.btn:hover {
+    transition: all 600ms ease;
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0px 10px 20px -2px rgba(0,0,0,0.3);
+}
+
+.main {margin-top: 50px}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+    background: #1B3333;
+    color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    box-shadow: 0px -7px 7px -5px rgb(34 60 80 / 60%);
+}
+
+footer > .social > i {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 50%;
+    background: silver;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: transform 600ms ease;
+    color: #333;
+    font-size: 18px;
+}
+
+footer > .social > i:hover {
+    transition: transform 600ms ease;
+    transform: translateY(-5px);
+    background: #ff5644;
+}
+
+@media(max-width: 900px) {
+    .container {
+        padding-left: 5%;
+        padding-right: 5%;
+        width: 90%;
+    }
+}
