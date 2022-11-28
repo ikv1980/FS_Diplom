@@ -2,7 +2,6 @@
     class Home extends Controller {
         private $head = null;
 
-
         public function index() {
             // заполняем данные $head для страницы
             $this->head = [
@@ -14,8 +13,8 @@
 
             $data = $this->head;
 
+            // Действия, если пользователь НЕ авторизован - выводим и обрабатываем форму регистрации 
             if($_COOKIE['login'] == '') {
-                // Если пользователь НЕ авторизован, то обрабатываем форму регистрации 
                 if(isset($_POST['name'])) {
                     $user = $this->model('UserModel');
                     $user->setData($_POST['email'], $_POST['name'], $_POST['pass']);
@@ -27,10 +26,12 @@
                         $data['message'] = $isValid;
                 } 
             }
-            // Если пользователь авторизован, то обрабатываем форму ссылок 
-            else {
+
+            // Действия, если пользователь авторизован - выводим и обрабатываем форму ссылок 
+            if($_COOKIE['login'] != '') {
                 $user = $this->model('Link');
                 $data['links'] = $user->getLinks();
+                // добавление ссылки
                 if(isset($_POST['link'])) {
                     $user->setData($_POST['link'], $_POST['short']);
                     // Валидация данных
@@ -41,16 +42,13 @@
                     }
                     else 
                         $data['message'] = $isValid;
-                }             
+                }
+                // удаление ссылки
+                if (isset($_REQUEST['delete'])) {
+                    $user->delLink($_POST['id']);
+                } 
             }
             
             $this->view('home/index', $data); // Передача данных в представление
-        }
-
-
-        public function autorisation() {
-            if($_COOKIE['login'] == '')
-                return false;
-            else return true;
         }
     }
