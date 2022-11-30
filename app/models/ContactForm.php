@@ -5,7 +5,6 @@
         private $age;
         private $message;
 
-        // Alt + Insert (Сгенерировать код... )
         public function setData($name, $email, $age, $message) {
             $this->name = $name;
             $this->email = $email;
@@ -16,8 +15,8 @@
         // Метод проверки валидности ввода (простейшие проверки)
         public function validForm() {
             if(strlen($this->name) < 3)
-                return "Имя слишком короткое";
-            else if(strlen($this->email) < 3)
+                return "Имя слишком короткое. Не менее 3 символов";
+            else if((filter_var($this->email, FILTER_VALIDATE_EMAIL) && strlen($this->email) > 5))
                 return "Email слишком короткий";
             else if(!is_numeric($this->age) || $this->age <= 0 || $this->age > 90)
                 return "Вы ввели не возраст";

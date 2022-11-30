@@ -1,18 +1,16 @@
 <?php
     class User extends Controller {
-        private $head = null;
 
         // Регистрация пользователя
         public function reg() {
             // заполняем данные $head для страницы
-            $this->head = [
+            $data = [
                 'title' => 'Регистрация пользователя',
                 'description' => 'Страница регистрации пользователя',
                 'css' => '<link rel="stylesheet" href="/public/css/form.css" charset="utf-8">',
                 'message' => ''
             ];
 
-            $data = $this->head;
             if(isset($_POST['name'])) {
                 $user = $this->model('UserModel');
                 $user->setData($_POST['email'], $_POST['name'], $_POST['pass']);

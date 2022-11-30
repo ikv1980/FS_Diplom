@@ -12,7 +12,7 @@
             <h3>Вам нужно сократить ссылку?<br>Сейчас мы это сделаем!</h3>
             <?php require_once 'app/views/home/sokr.php'; ?>
                 <div class="link">
-                    <h2>Сокращенные ссылки</h2>
+                    <?php if(count($data['links']) > 0 ) {echo '<h2>Сокращенные ссылки</h2>';}?> 
                     <?php for($i = 0; $i < count($data['links']); $i++): ?>
                         <div>
                             <p><b>Длинная: </b><?=$data['links'][$i]['link']?></p>

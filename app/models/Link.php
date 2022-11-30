@@ -11,8 +11,7 @@
             $this->_db = DB::getInstence();
             $this->_db->exec("set names utf8mb4"); //Чтобы не было кракозябр (знаков вопроса)
         }
-
-        // Alt + Insert (Сгенерировать код... )
+        // устанвока значений
         public function setData($link, $short) {
             $this->link = $link;
             $this->short = $short;
@@ -36,8 +35,8 @@
             if(!(filter_var($this->link, FILTER_VALIDATE_URL)))
                 return "Некорректная ссылка";
             else if(strlen($this->short) < 3)
-                return "Длинна сокращения не менее 2 символов";
-                else if($this->status_short($this->short))
+                return "Длинна сокращения не менее 3 символов";
+            else if($this->status_short($this->short))
                 return 'Сокращение <b>['.$this->short.']</b> уже существует';
             else
                 return "Верно";
@@ -48,6 +47,7 @@
             $sql = 'INSERT INTO links(link, short, name) VALUES(:link, :short, :name)';
             $query = $this->_db->prepare($sql);
             $name = $_COOKIE['login'];
+            
             $query->execute(['link' => $this->link, 'short' => $this->short, 'name' => $name]);
             $_POST['short'] = null;
             $_POST['link'] = null;

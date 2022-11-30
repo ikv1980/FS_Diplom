@@ -1,17 +1,14 @@
 <?php 
     class Home extends Controller {
-        private $head = null;
 
         public function index() {
             // заполняем данные $head для страницы
-            $this->head = [
+            $data = [
                 'title' => 'Главная страница',
                 'description' => 'Главная страница сайта по сокращению ссылок',
                 'css' => '<link rel="stylesheet" href="/public/css/form.css" charset="utf-8">',
                 'message' => ''
             ];
-
-            $data = $this->head;
 
             // Действия, если пользователь НЕ авторизован - выводим и обрабатываем форму регистрации 
             if($_COOKIE['login'] == '') {

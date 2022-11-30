@@ -22,17 +22,17 @@
         }
 
         // проверка Email на валидность и длинну
-        public function val_email($email) {
+        private function val_email($email) {
             return !(filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($email) > 5);
         }
         // проверка Email на наличие в БД
-        public function status_email($email) {
+        private function status_email($email) {
             $result = $this->_db->query("SELECT * FROM `users` WHERE `email` = '$email'");
             $status = ($result->fetch(PDO::FETCH_ASSOC) > 0);
             return $status;
         }
         // проверка Login на наличие в БД
-        public function status_name($name) {
+        private function status_name($name) {
             $result = $this->_db->query("SELECT * FROM `users` WHERE `name` = '$name'");
             $status = ($result->fetch(PDO::FETCH_ASSOC) > 0);
             return $status;
@@ -54,7 +54,6 @@
                 return "Верно";
         }
 
-
         // Добавление пользователя в БД
         public function addUser() {
             $sql = 'INSERT INTO users(name, email, pass, image) VALUES(:name, :email, :pass, :image)';
@@ -65,18 +64,21 @@
 
             $this->setAuth($this->name);
         }
+
         // Получение данных о польозователе
         public function getUser() {
             $name = $_COOKIE['login'];
             $result = $this->_db->query("SELECT * FROM `users` WHERE `name` = '$name'");
             return $result->fetch(PDO::FETCH_ASSOC);
         }
+
         // Выход с сайта (удаление COOKIE)
         public function logOut() {
             setcookie('login', $this->name, time() - 3600, '/');
             unset($_COOKIE['login']);
             header('Location: /user/auth');
         }
+
         // Авторизация пользователя (установкаа COOKIE на 1 час )
         public function auth($name, $pass) {
             $result = $this->_db->query("SELECT * FROM `users` WHERE `name` = '$name'");
@@ -91,11 +93,13 @@
             else
                 return 'Пароли не совпадают';
         }
+
         // установкаа COOKIE на 1 час (60*60)
         public function setAuth($name) {
             setcookie('login', $name, time() + 3600, '/');
             header('Location: /user/dashboard'); // заголовок переадресации
         }
+
         // функция добавление изображения
         public function addimage() {
             if ($_FILES && $_FILES["filename"]["error"]==UPLOAD_ERR_OK) {
@@ -108,23 +112,22 @@
                 $name_without_ext = pathinfo($name, PATHINFO_FILENAME); // изначальное имя 
                 $ext = pathinfo($name, PATHINFO_EXTENSION); // расширение
                 $new_name = $name_without_ext . "_" . time() . "." . $ext; // новое имя файла.расширение
-
+                echo '<br>'. $new_name;
                 // копирование файла на сервер в папку
                 $path = "public/img/avatar/" . $new_name;
                 move_uploaded_file($_FILES["filename"]["tmp_name"], $path);
 
                 // удаление существующего файла
-                $result = $this->_db->query("SELECT `image` FROM `users` WHERE `email` = '$user'");
+                $result = $this->_db->query("SELECT `image` FROM `users` WHERE `name` = '$user'");
                 $image = $result->fetch(PDO::FETCH_ASSOC);
-                echo $image['image'];
                 if ($image['image'] != 'user.webp') {
                     unlink("public/img/avatar/" . $image['image']);
                 }
 
                 // внесение информации о новом файле в БД
-                $sql = "UPDATE users SET image=:image WHERE email=:email;";
+                $sql = "UPDATE users SET image=:image WHERE name=:name;";
                 $query = $this->_db->prepare($sql);
-                $query->execute(['image' => $new_name, 'email' => $user]);
+                $query->execute(['image' => $new_name, 'name' => $user]);
 
                 header('Location: /user/dashboard'); // заголовок переадресации
             } 
